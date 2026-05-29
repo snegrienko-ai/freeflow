@@ -13,7 +13,7 @@ private struct SetupProviderSettingsSheet: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Advanced Provider Settings")
+                Text("Расширенные настройки провайдера")
                     .font(.title2.weight(.semibold))
                 Text("Use these fields when pointing \(AppName.displayName) at another OpenAI-compatible provider or when you need custom model IDs.")
                     .font(.subheadline)
@@ -39,7 +39,7 @@ private struct SetupProviderSettingsSheet: View {
 
             HStack {
                 Spacer()
-                Button("Done") {
+                Button("Готово") {
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
@@ -127,7 +127,7 @@ struct SetupView: View {
                 HStack(alignment: .center) {
                     Group {
                         if currentStep != .welcome {
-                            Button("Back") {
+                            Button("Назад") {
                                 keyValidationError = nil
                                 withAnimation {
                                     currentStep = previousStep(currentStep)
@@ -142,19 +142,19 @@ struct SetupView: View {
                     Group {
                         if currentStep != .ready {
                             if currentStep == .apiKey {
-                                Button(isValidatingKey ? "Validating..." : "Continue") {
+                                Button(isValidatingKey ? "Проверка..." : "Продолжить") {
                                     validateAndContinue()
                                 }
                                 .keyboardShortcut(.defaultAction)
                                 .disabled(apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isValidatingKey)
                             } else if currentStep == .vocabulary {
-                                Button("Continue") {
+                                Button("Продолжить") {
                                     saveCustomVocabularyAndContinue()
                                 }
                                 .keyboardShortcut(.defaultAction)
                             } else if currentStep == .testTranscription {
                                 HStack(spacing: 10) {
-                                    Button("Skip") {
+                                    Button("Пропустить") {
                                         stopTestHotkeyMonitoring()
                                         withAnimation {
                                             currentStep = nextStep(currentStep)
@@ -163,7 +163,7 @@ struct SetupView: View {
                                     .buttonStyle(.plain)
                                     .foregroundStyle(.secondary)
 
-                                    Button("Continue") {
+                                    Button("Продолжить") {
                                         stopTestHotkeyMonitoring()
                                         withAnimation {
                                             currentStep = nextStep(currentStep)
@@ -173,7 +173,7 @@ struct SetupView: View {
                                     .disabled(testPhase != .done || testTranscript.isEmpty || testError != nil)
                                 }
                             } else {
-                                Button("Continue") {
+                                Button("Продолжить") {
                                     withAnimation {
                                         currentStep = nextStep(currentStep)
                                     }
@@ -182,7 +182,7 @@ struct SetupView: View {
                                 .disabled(!canContinueFromCurrentStep)
                             }
                         } else {
-                            Button("Get Started") {
+                            Button("Начать") {
                                 onComplete()
                             }
                             .keyboardShortcut(.defaultAction)
@@ -326,7 +326,7 @@ struct SetupView: View {
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "star")
-                            Text("Star")
+                            Text("Оценить")
                         }
                         .font(.caption.weight(.semibold))
                         .padding(.horizontal, 10)
@@ -393,7 +393,7 @@ struct SetupView: View {
                     .font(.system(size: 60))
                     .foregroundStyle(.blue)
 
-                Text("API Key")
+                Text("Ключ API")
                     .font(.title)
                     .fontWeight(.bold)
 
@@ -420,9 +420,9 @@ struct SetupView: View {
                     )
 
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("API Key")
+                        Text("Ключ API")
                             .font(.headline)
-                        SecureField("Paste your API key", text: $apiKeyInput)
+                        SecureField("Вставьте ключ API", text: $apiKeyInput)
                             .textFieldStyle(.roundedBorder)
                             .font(.system(.body, design: .monospaced))
                             .disabled(isValidatingKey)
@@ -444,9 +444,9 @@ struct SetupView: View {
                             Image(systemName: "slider.horizontal.3")
                                 .foregroundStyle(.secondary)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("Advanced Provider Settings")
+                                Text("Расширенные настройки провайдера")
                                     .foregroundStyle(.primary)
-                                Text("Base URL and model IDs")
+                                Text("URL и ID моделей")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
@@ -483,7 +483,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Microphone Access")
+            Text("Доступ к микрофону")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -496,15 +496,15 @@ struct SetupView: View {
                 Image(systemName: "mic.fill")
                     .frame(width: 24)
                     .foregroundStyle(.blue)
-                Text("Microphone")
+                Text("Микрофон")
                 Spacer()
                 if micPermissionGranted {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Granted")
+                    Text("Разрешено")
                         .foregroundStyle(.green)
                 } else {
-                    Button("Grant Access") {
+                    Button("Разрешить доступ") {
                         requestMicPermission()
                     }
                 }
@@ -522,7 +522,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Accessibility Access")
+            Text("Универсальный доступ")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -535,15 +535,15 @@ struct SetupView: View {
                 Image(systemName: "hand.raised.fill")
                     .frame(width: 24)
                     .foregroundStyle(.blue)
-                Text("Accessibility")
+                Text("Универсальный доступ")
                 Spacer()
                 if accessibilityGranted {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Granted")
+                    Text("Разрешено")
                         .foregroundStyle(.green)
                 } else {
-                    Button("Open Settings") {
+                    Button("Открыть настройки") {
                         requestAccessibility()
                     }
                 }
@@ -567,7 +567,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Screen Recording")
+            Text("Запись экрана")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -586,15 +586,15 @@ struct SetupView: View {
                 Image(systemName: "camera.viewfinder")
                     .frame(width: 24)
                     .foregroundStyle(.blue)
-                Text("Screen Recording")
+                Text("Запись экрана")
                 Spacer()
                 if appState.hasScreenRecordingPermission {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Granted")
+                    Text("Разрешено")
                         .foregroundStyle(.green)
                 } else {
-                    Button("Grant Access") {
+                    Button("Разрешить доступ") {
                         appState.requestScreenCapturePermission()
                     }
                 }
@@ -618,7 +618,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Hold to Talk Shortcut")
+            Text("Макрос «Удержание для разговора»")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -654,7 +654,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Tap to Toggle Shortcut")
+            Text("Макрос «Нажатие для переключения»")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -690,7 +690,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Paste Again Shortcut")
+            Text("Макрос «Вставить снова»")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -725,7 +725,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Custom Vocabulary")
+            Text("Пользовательский словарь")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -735,7 +735,7 @@ struct SetupView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Vocabulary")
+                Text("Словарь")
                     .font(.headline)
 
                 TextEditor(text: $customVocabularyInput)
@@ -760,7 +760,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Edit Mode")
+            Text("Режим редактирования")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -770,14 +770,14 @@ struct SetupView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             VStack(alignment: .leading, spacing: 14) {
-                Toggle("Enable Edit Mode", isOn: Binding(
+                Toggle("Включить режим редактирования", isOn: Binding(
                     get: { appState.isCommandModeEnabled },
                     set: { newValue in
                         _ = appState.setCommandModeEnabled(newValue)
                     }
                 ))
 
-                Picker("Invocation Style", selection: Binding(
+                Picker("Стиль вызова", selection: Binding(
                     get: { appState.commandModeStyle },
                     set: { newValue in
                         _ = appState.setCommandModeStyle(newValue)
@@ -804,7 +804,7 @@ struct SetupView: View {
                                 .foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
 
-                            Picker("Extra Modifier", selection: Binding(
+                            Picker("Дополнительный модификатор", selection: Binding(
                                 get: { appState.commandModeManualModifier },
                                 set: { newValue in
                                     _ = appState.setCommandModeManualModifier(newValue)
@@ -839,7 +839,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Launch at Login")
+            Text("Запуск при входе")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -867,7 +867,7 @@ struct SetupView: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.blue)
 
-            Text("Recording overlay style")
+            Text("Стиль оверлея записи")
                 .font(.title)
                 .fontWeight(.bold)
 
@@ -899,7 +899,7 @@ struct SetupView: View {
             // Microphone picker
             VStack(spacing: 4) {
                 Picker("Microphone:", selection: $appState.selectedMicrophoneID) {
-                    Text("System Default").tag("default")
+                    Text("Системный")
                     ForEach(appState.availableMicrophones) { device in
                         Text(device.name).tag(device.uid)
                     }
@@ -977,7 +977,7 @@ struct SetupView: View {
                             .foregroundStyle(.green)
 
                         if let error = testError {
-                            Text("Something went wrong")
+                            Text("Что-то пошло не так")
                                 .font(.title2)
                                 .fontWeight(.semibold)
 
@@ -990,7 +990,7 @@ struct SetupView: View {
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
                         } else if testTranscript.isEmpty {
-                            Text("No speech detected")
+                            Text("Речь не обнаружена")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(.secondary)
@@ -1109,7 +1109,7 @@ struct SetupView: View {
         case (false, true):
             return "Tap \(appState.toggleShortcut.displayName)"
         case (false, false):
-            return "Use Start Dictating from the menu bar"
+            return "Используйте «Начать диктовку» из строки меню"
         }
     }
 

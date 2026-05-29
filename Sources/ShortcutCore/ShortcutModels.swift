@@ -46,8 +46,8 @@ enum RecordingTriggerMode: String, Codable {
 
     var badgeTitle: String {
         switch self {
-        case .hold: return "Hold"
-        case .toggle: return "Tap"
+        case .hold: return "Удержание"
+        case .toggle: return "Нажатие"
         }
     }
 }

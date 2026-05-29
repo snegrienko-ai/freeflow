@@ -87,29 +87,8 @@ $(ICON_ICNS): $(ICON_SOURCE)
 	@echo "Generated $@"
 
 dmg: all
-	@rm -f "$(BUILD_DIR)/$(APP_NAME).dmg"
-	@rm -rf $(BUILD_DIR)/dmg-staging
-	@mkdir -p $(BUILD_DIR)/dmg-staging
-	@cp -R "$(APP_BUNDLE)" $(BUILD_DIR)/dmg-staging/
-	@osascript -e 'tell application "Finder" to make alias file to POSIX file "/Applications" at POSIX file "'"$$(cd $(BUILD_DIR)/dmg-staging && pwd)"'"'
-	@ALIAS=$$(find $(BUILD_DIR)/dmg-staging -maxdepth 1 -not -name '*.app' -not -name '.DS_Store' -type f | head -1) && mv "$$ALIAS" "$(BUILD_DIR)/dmg-staging/Applications"
-	@fileicon set "$(BUILD_DIR)/dmg-staging/Applications" /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ApplicationsFolderIcon.icns
-	@echo "Creating DMG..."
-	@create-dmg \
-		--volname "$(APP_NAME)" \
-		--volicon "$(ICON_ICNS)" \
-		--background "Resources/dmg-background.tiff" \
-		--window-pos 200 120 \
-		--window-size 660 400 \
-		--icon-size 128 \
-		--icon "$(APP_NAME).app" 180 170 \
-		--hide-extension "$(APP_NAME).app" \
-		--icon "Applications" 480 170 \
-		--no-internet-enable \
-		"$(BUILD_DIR)/$(APP_NAME).dmg" \
-		"$(BUILD_DIR)/dmg-staging"
-	@rm -rf $(BUILD_DIR)/dmg-staging
-	@echo "Created $(BUILD_DIR)/$(APP_NAME).dmg"
+	@echo "Building DMG with Scripts/build-dmg.sh…"
+	@bash Scripts/build-dmg.sh "$(APP_NAME)" "$(BUILD_DIR)" "$(ICON_ICNS)" "Resources/dmg-background.tiff"
 
 codesign-dmg: dmg
 	codesign --force --sign "$(CODESIGN_IDENTITY)" "$(BUILD_DIR)/$(APP_NAME).dmg"

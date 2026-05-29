@@ -208,7 +208,7 @@ private struct ShortcutCaptureRow: View {
                 .buttonStyle(.plain)
                 .disabled(isCapturing)
 
-                Button(isCapturing ? "Done" : "Record…") {
+                Button(isCapturing ? "Готово" : "Записать…") {
                     if isCapturing {
                         finishCapture()
                     } else {
@@ -218,7 +218,7 @@ private struct ShortcutCaptureRow: View {
                 .buttonStyle(.bordered)
 
                 if isCapturing {
-                    Button("Cancel") {
+                    Button("Отмена") {
                         cancelCapture()
                     }
                     .buttonStyle(.plain)
@@ -228,8 +228,8 @@ private struct ShortcutCaptureRow: View {
             if isCapturing {
                 Label(
                     currentBinding == nil
-                        ? "Press and hold the shortcut you want."
-                        : "Press Esc or Enter to save.",
+                        ? "Нажмите и удерживайте нужную комбинацию."
+                        : "Нажмите Esc или Enter для сохранения.",
                     systemImage: "keyboard"
                 )
                     .font(.subheadline.weight(.semibold))

@@ -117,10 +117,10 @@ struct ProviderSettingsFields: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("API Base URL")
+            Text("URL API")
                 .font(.caption.weight(.semibold))
 
-            Text("Change this to use a different OpenAI-compatible API provider.")
+            Text("Измените для использования другого OpenAI-совместимого провайдера.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -138,7 +138,7 @@ struct ProviderSettingsFields: View {
                         }
                     }
 
-                Button("Reset to Default") {
+                Button("Сбросить") {
                     apiBaseURLInput = AppState.defaultAPIBaseURL
                     appState.apiBaseURL = AppState.defaultAPIBaseURL
                 }
@@ -146,13 +146,13 @@ struct ProviderSettingsFields: View {
             }
 
             if showsModelDescription {
-                Text("If you use another provider, enter that provider's model IDs here.")
+                Text("Если используете другого провайдера, укажите здесь ID его моделей.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Post-Processing Model")
+                Text("Модель обработки")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
                     TextField(AppState.defaultPostProcessingModel, text: $postProcessingModelDraft)
@@ -166,19 +166,19 @@ struct ProviderSettingsFields: View {
                                 commitPostProcessingModel()
                             }
                         }
-                    Button("Reset to Default") {
+                    Button("Сбросить") {
                         postProcessingModelDraft = AppState.defaultPostProcessingModel
                         appState.postProcessingModel = AppState.defaultPostProcessingModel
                     }
                     .font(.caption)
                 }
-                Text("Used for transcript cleanup and Edit Mode transforms.")
+                Text("Используется для очистки транскрипта и преобразований в режиме редактирования.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Post-Processing Fallback Model")
+                Text("Резервная модель обработки")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
                     TextField(AppState.defaultPostProcessingFallbackModel, text: $postProcessingFallbackModelDraft)
@@ -192,19 +192,19 @@ struct ProviderSettingsFields: View {
                                 commitPostProcessingFallbackModel()
                             }
                         }
-                    Button("Reset to Default") {
+                    Button("Сбросить") {
                         postProcessingFallbackModelDraft = AppState.defaultPostProcessingFallbackModel
                         appState.postProcessingFallbackModel = AppState.defaultPostProcessingFallbackModel
                     }
                     .font(.caption)
                 }
-                Text("Used as the explicit retry model for transcript cleanup and Edit Mode transforms.")
+                Text("Используется как явная модель повтора для очистки транскрипта и преобразований в режиме редактирования.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Context Model")
+                Text("Модель контекста")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
                     TextField(AppState.defaultContextModel, text: $contextModelDraft)
@@ -218,19 +218,19 @@ struct ProviderSettingsFields: View {
                                 commitContextModel()
                             }
                         }
-                    Button("Reset to Default") {
+                    Button("Сбросить") {
                         contextModelDraft = AppState.defaultContextModel
                         appState.contextModel = AppState.defaultContextModel
                     }
                     .font(.caption)
                 }
-                Text("Used for context inference, with a text-only retry when screenshot analysis fails.")
+                Text("Используется для вывода контекста, с текстовым повтором при неудаче анализа скриншота.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Transcription Model")
+                Text("Модель транскрипции")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
                     TextField(AppState.defaultTranscriptionModel, text: $transcriptionModelDraft)
@@ -244,37 +244,37 @@ struct ProviderSettingsFields: View {
                                 commitTranscriptionModel()
                             }
                         }
-                    Button("Reset to Default") {
+                    Button("Сбросить") {
                         transcriptionModelDraft = AppState.defaultTranscriptionModel
                         appState.transcriptionModel = AppState.defaultTranscriptionModel
                     }
                     .font(.caption)
                 }
-                Text("Used for speech-to-text transcription.")
+                Text("Используется для преобразования речи в текст.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Transcription Language")
+                Text("Язык транскрипции")
                     .font(.caption.weight(.semibold))
                 Picker("", selection: $appState.transcriptionLanguage) {
                     ForEach(AppState.transcriptionLanguageOptions, id: \.code) { option in
                         Text(option.name).tag(option.code)
                     }
                 }
-                .accessibilityLabel("Transcription Language")
+                .accessibilityLabel("Язык транскрипции")
                 .labelsHidden()
-                Text("Hint to the transcription model. Auto-detect works for most users. Pick a specific language if you see wrong-script characters (for example Chinese) appear in your output.")
+                Text("Подсказка для модели транскрипции. Автоопределение работает для большинства пользователей. Выберите конкретный язык, если в выводе появляются символы неверного языка (например, китайские).")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Transcription API URL")
+                Text("URL API транскрипции")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
-                    TextField("Uses API Base URL when empty", text: $transcriptionAPIURLInput)
+                    TextField("Используется URL API, если пусто", text: $transcriptionAPIURLInput)
                         .textFieldStyle(.roundedBorder)
                         .font(.system(.body, design: .monospaced))
                         .focused($transcriptionAPIURLFocused)
@@ -287,7 +287,7 @@ struct ProviderSettingsFields: View {
                             }
                         }
                     if !transcriptionAPIURLInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Button("Clear") {
+                        Button("Очистить") {
                             transcriptionAPIURLInput = ""
                             appState.transcriptionAPIURL = ""
                         }
@@ -297,10 +297,10 @@ struct ProviderSettingsFields: View {
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Transcription API Key")
+                Text("Ключ API транскрипции")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
-                    SecureField("Uses API Key when empty", text: $transcriptionAPIKeyInput)
+                    SecureField("Используется ключ API, если пусто", text: $transcriptionAPIKeyInput)
                         .textFieldStyle(.roundedBorder)
                         .font(.system(.body, design: .monospaced))
                         .focused($transcriptionAPIKeyFocused)
@@ -313,7 +313,7 @@ struct ProviderSettingsFields: View {
                             }
                         }
                     if !transcriptionAPIKeyInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Button("Clear") {
+                        Button("Очистить") {
                             transcriptionAPIKeyInput = ""
                             appState.transcriptionAPIKey = ""
                         }
@@ -325,18 +325,18 @@ struct ProviderSettingsFields: View {
             Divider()
 
             Toggle(
-                "Stream audio while recording (realtime)",
+                "Потоковая передача аудио во время записи (реальное время)",
                 isOn: $appState.realtimeStreamingEnabled
             )
-            Text("Streams audio through the provider's OpenAI-compatible /v1/realtime WebSocket so transcription runs while you speak.")
+            Text("Передаёт аудио через OpenAI-совместимый WebSocket /v1/realtime провайдера, транскрипция работает во время речи.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Realtime Transcription Model")
+                Text("Модель транскрипции в реальном времени")
                     .font(.caption.weight(.semibold))
                 HStack(spacing: 8) {
-                    TextField("Required by some providers, e.g. gpt-4o-transcribe", text: $realtimeStreamingModelDraft)
+                    TextField("Требуется некоторыми провайдерами, например gpt-4o-transcribe", text: $realtimeStreamingModelDraft)
                         .textFieldStyle(.roundedBorder)
                         .focused($isEditingRealtimeStreamingModel)
                         .onSubmit {
@@ -348,14 +348,14 @@ struct ProviderSettingsFields: View {
                             }
                         }
                     if !realtimeStreamingModelDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Button("Reset") {
+                        Button("Сбросить") {
                             realtimeStreamingModelDraft = ""
                             appState.realtimeStreamingModel = ""
                         }
                         .font(.caption)
                     }
                 }
-                Text("Used only for realtime streaming. Leave empty for providers that supply a server default.")
+                Text("Используется только для потоковой передачи в реальном времени. Оставьте пустым для провайдеров с моделью по умолчанию.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -475,30 +475,30 @@ struct DebugSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Debug")
+                Text("Отладка")
                     .font(.largeTitle.bold())
 
-                SettingsCard("Overlay", icon: "wrench.and.screwdriver") {
+                SettingsCard("Оверлей", icon: "wrench.and.screwdriver") {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Show the recording overlay with simulated audio levels.")
+                        Text("Показать оверлей записи с имитацией уровней аудио.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
 
-                        Button(appState.isDebugOverlayActive ? "Stop Debug Overlay" : "Debug Overlay") {
+                        Button(appState.isDebugOverlayActive ? "Остановить отладочный оверлей" : "Отладочный оверлей") {
                             appState.toggleDebugOverlay()
                         }
                     }
                 }
 
-                SettingsCard("Update Overlay", icon: "arrow.down.circle") {
+                SettingsCard("Оверлей обновления", icon: "arrow.down.circle") {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Display the update available overlay after dictation finishes.")
+                        Text("Показать оверлей доступного обновления после завершения диктовки.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
 
-                        Toggle("Show after dictation", isOn: $appState.debugShowsUpdateReminderAfterDictation)
+                        Toggle("Показывать после диктовки", isOn: $appState.debugShowsUpdateReminderAfterDictation)
 
-                        Button("Show Update Overlay Now") {
+                        Button("Показать оверлей обновления сейчас") {
                             appState.showDebugUpdateAvailableOverlay()
                         }
                     }
@@ -620,7 +620,7 @@ struct GeneralSettingsView: View {
                                 if githubCache.isLoading {
                                     ProgressView().scaleEffect(0.5)
                                 } else if let count = githubCache.starCount {
-                                    Text("\(count.formatted()) \(count == 1 ? "star" : "stars")")
+                                    Text("\(count.formatted()) \(count == 1 ? "звезда" : "звёзд")")
                                         .font(.caption2.weight(.semibold))
                                         .foregroundStyle(.secondary)
                                 }
@@ -634,7 +634,7 @@ struct GeneralSettingsView: View {
                             } label: {
                                 HStack(spacing: 4) {
                                     Image(systemName: "star")
-                                    Text("Star")
+                                    Text("Оценить")
                                 }
                                 .font(.caption.weight(.semibold))
                                 .padding(.horizontal, 10)
@@ -668,7 +668,7 @@ struct GeneralSettingsView: View {
                                     }
                                 }
                                 .clipped()
-                                Text("recently starred")
+                                Text("недавно оценили")
                                     .font(.caption2)
                                     .foregroundStyle(.tertiary)
                                     .fixedSize()
@@ -691,46 +691,46 @@ struct GeneralSettingsView: View {
                 .padding(.top, 4)
                 .padding(.bottom, 4)
 
-                SettingsCard("App", icon: "power") {
+                SettingsCard("Приложение", icon: "power") {
                     startupSection
                 }
-                SettingsCard("Updates", icon: "arrow.triangle.2.circlepath") {
+                SettingsCard("Обновления", icon: "arrow.triangle.2.circlepath") {
                     updatesSection
                 }
-                SettingsCard("API Key", icon: "key.fill") {
+                SettingsCard("Ключ API", icon: "key.fill") {
                     apiKeySection
                 }
-                SettingsCard("Output Language", icon: "globe") {
+                SettingsCard("Язык вывода", icon: "globe") {
                     outputLanguageSection
                 }
-                SettingsCard("Dictation Shortcuts", icon: "keyboard.fill") {
+                SettingsCard("Горячие клавиши", icon: "keyboard.fill") {
                     hotkeySection
                 }
-                SettingsCard("Audio During Dictation", icon: "speaker.slash.fill") {
+                SettingsCard("Аудио во время диктовки", icon: "speaker.slash.fill") {
                     dictationAudioSection
                 }
-                SettingsCard("Recording Overlay", icon: "rectangle.dashed") {
+                SettingsCard("Оверлей записи", icon: "rectangle.dashed") {
                     overlaySection
                 }
-                SettingsCard("Edit Mode", icon: "pencil") {
+                SettingsCard("Режим редактирования", icon: "pencil") {
                     commandModeSection
                 }
-                SettingsCard("Clipboard", icon: "doc.on.clipboard") {
+                SettingsCard("Буфер обмена", icon: "doc.on.clipboard") {
                     clipboardSection
                 }
-                SettingsCard("Microphone", icon: "mic.fill") {
+                SettingsCard("Микрофон", icon: "mic.fill") {
                     microphoneSection
                 }
-                SettingsCard("Sound Volume", icon: "speaker.wave.2.fill") {
+                SettingsCard("Громкость звука", icon: "speaker.wave.2.fill") {
                     soundVolumeSection
                 }
-                SettingsCard("Custom Vocabulary", icon: "text.book.closed.fill") {
+                SettingsCard("Пользовательский словарь", icon: "text.book.closed.fill") {
                     vocabularySection
                 }
-                SettingsCard("Permissions", icon: "lock.shield.fill") {
+                SettingsCard("Разрешения", icon: "lock.shield.fill") {
                     permissionsSection
                 }
-                SettingsCard("Build", icon: "info.circle.fill") {
+                SettingsCard("Сборка", icon: "info.circle.fill") {
                     buildInfoSection
                 }
             }
@@ -762,18 +762,18 @@ struct GeneralSettingsView: View {
 
     private var startupSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Toggle("Launch \(AppName.displayName) at login", isOn: $appState.launchAtLogin)
-            Toggle("Show menu bar icon", isOn: $showMenuBarIcon)
+            Toggle("Запускать \(AppName.displayName) при входе", isOn: $appState.launchAtLogin)
+            Toggle("Показывать значок в строке меню", isOn: $showMenuBarIcon)
 
             if SMAppService.mainApp.status == .requiresApproval {
                 HStack(spacing: 6) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundStyle(.orange)
                         .font(.caption)
-                    Text("Login item requires approval in System Settings.")
+                    Text("Элемент входа требует одобрения в Системных настройках.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Button("Open Login Items Settings") {
+                    Button("Открыть настройки элементов входа") {
                         NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.LoginItems-Settings.extension")!)
                     }
                     .font(.caption)
@@ -786,7 +786,7 @@ struct GeneralSettingsView: View {
 
     private var updatesSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Toggle("Automatically check for updates", isOn: Binding(
+            Toggle("Автоматически проверять обновления", isOn: Binding(
                 get: { updateManager.autoCheckEnabled },
                 set: { updateManager.autoCheckEnabled = $0 }
             ))
@@ -801,16 +801,16 @@ struct GeneralSettingsView: View {
                         HStack(spacing: 6) {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Checking...")
+                            Text("Проверка...")
                         }
                     } else {
-                        Text("Check for Updates Now")
+                        Text("Проверить обновления")
                     }
                 }
                 .disabled(updateManager.isChecking || updateManager.updateStatus != .idle)
 
                 if let lastCheck = updateManager.lastCheckDate {
-                    Text("Last checked: \(lastCheck.formatted(date: .abbreviated, time: .shortened))")
+                    Text("Последняя проверка: \(lastCheck.formatted(date: .abbreviated, time: .shortened))")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -824,7 +824,7 @@ struct GeneralSettingsView: View {
                             Image(systemName: "arrow.down.circle.fill")
                                 .foregroundStyle(.blue)
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Downloading update...")
+                                Text("Загрузка обновления...")
                                     .font(.caption.weight(.semibold))
                                 ProgressView(value: updateManager.downloadProgress ?? 0)
                                     .progressViewStyle(.linear)
@@ -835,7 +835,7 @@ struct GeneralSettingsView: View {
                                 }
                             }
                             Spacer()
-                            Button("Cancel") {
+                            Button("Отмена") {
                                 updateManager.cancelDownload()
                             }
                             .font(.caption)
@@ -845,7 +845,7 @@ struct GeneralSettingsView: View {
                         HStack(spacing: 8) {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Installing update...")
+                            Text("Установка обновления...")
                                 .font(.caption.weight(.semibold))
                         }
 
@@ -853,7 +853,7 @@ struct GeneralSettingsView: View {
                         HStack(spacing: 8) {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Relaunching...")
+                            Text("Перезапуск...")
                                 .font(.caption.weight(.semibold))
                         }
 
@@ -865,7 +865,7 @@ struct GeneralSettingsView: View {
                                 .font(.caption)
                                 .foregroundStyle(.red)
                             Spacer()
-                            Button("Retry") {
+                            Button("Повторить") {
                                 updateManager.updateStatus = .idle
                                 if let release = updateManager.latestRelease {
                                     updateManager.downloadAndInstall(release: release)
@@ -879,15 +879,15 @@ struct GeneralSettingsView: View {
                             Image(systemName: "arrow.down.circle.fill")
                                 .foregroundStyle(.blue)
                             Text(updateManager.latestReleaseVersion.isEmpty
-                                ? "A new version of \(AppName.displayName) is available!"
-                                : "\(AppName.displayName) v\(updateManager.latestReleaseVersion) is available!")
+                                ? "Доступна новая версия \(AppName.displayName)!"
+                                : "Доступен \(AppName.displayName) v\(updateManager.latestReleaseVersion)!")
                                 .font(.caption.weight(.semibold))
                             Spacer()
-                            Button("What's New") {
+                            Button("Что нового") {
                                 updateManager.showReleaseNotes()
                             }
                             .font(.caption)
-                            Button("Update Now") {
+                            Button("Обновить") {
                                 if let release = updateManager.latestRelease {
                                     updateManager.downloadAndInstall(release: release)
                                 }
@@ -908,7 +908,7 @@ struct GeneralSettingsView: View {
     private var buildInfoSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline) {
-                Text("Build number")
+                Text("Номер сборки")
                     .font(.caption.weight(.semibold))
                 Spacer()
                 Text(appBuildNumber)
@@ -928,7 +928,7 @@ struct GeneralSettingsView: View {
                 Button {
                     copyBuildDiagnostics()
                 } label: {
-                    Label(copiedBuildInfo ? "Copied" : "Copy", systemImage: copiedBuildInfo ? "checkmark" : "doc.on.doc")
+                    Label(copiedBuildInfo ? "Скопировано" : "Копировать", systemImage: copiedBuildInfo ? "checkmark" : "doc.on.doc")
                 }
                 .font(.caption)
             }
@@ -954,12 +954,12 @@ struct GeneralSettingsView: View {
 
     private var apiKeySection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("\(AppName.displayName) uses the configured transcription model with your selected OpenAI-compatible provider.")
+            Text("\(AppName.displayName) использует настроенную модель транскрипции с выбранным OpenAI-совместимым провайдером.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             HStack(spacing: 8) {
-                SecureField("Enter your Groq API key", text: $apiKeyInput)
+                SecureField("Введите ключ API Groq", text: $apiKeyInput)
                     .textFieldStyle(.roundedBorder)
                     .font(.system(.body, design: .monospaced))
                     .disabled(isValidatingKey)
@@ -968,7 +968,7 @@ struct GeneralSettingsView: View {
                         keyValidationSuccess = false
                     }
 
-                Button(isValidatingKey ? "Validating..." : "Save") {
+                Button(isValidatingKey ? "Проверка..." : "Сохранить") {
                     validateAndSaveKey()
                 }
                 .disabled(apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isValidatingKey)
@@ -979,7 +979,7 @@ struct GeneralSettingsView: View {
                     .foregroundStyle(.red)
                     .font(.caption)
             } else if keyValidationSuccess {
-                Label("API key saved", systemImage: "checkmark.circle.fill")
+                Label("Ключ API сохранён", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
                     .font(.caption)
             }
@@ -996,7 +996,7 @@ struct GeneralSettingsView: View {
                 }
             } label: {
                 HStack {
-                    Text("Advanced Provider Settings")
+                    Text("Расширенные настройки провайдера")
                     Spacer()
                 }
                 .contentShape(Rectangle())
@@ -1026,7 +1026,7 @@ struct GeneralSettingsView: View {
                     appState.apiKey = key
                     keyValidationSuccess = true
                 } else {
-                    keyValidationError = "Validation failed. Please check your API key and provider settings, then try again."
+                    keyValidationError = "Проверка не удалась. Проверьте ключ API и настройки провайдера, затем повторите."
                 }
             }
         }
@@ -1036,28 +1036,28 @@ struct GeneralSettingsView: View {
 
     private static let outputLanguageOptions = [
         "",
-        "English",
-        "Chinese (Simplified)",
-        "Chinese (Traditional)",
-        "Spanish",
-        "French",
-        "Japanese",
-        "Korean",
-        "German",
-        "Portuguese",
+        "Английский",
+        "Китайский (упрощённый)",
+        "Китайский (традиционный)",
+        "Испанский",
+        "Французский",
+        "Японский",
+        "Корейский",
+        "Немецкий",
+        "Португальский",
     ]
 
     private var outputLanguageSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Picker("Language", selection: $appState.outputLanguage) {
-                Text("Same as spoken").tag("")
+            Picker("Язык", selection: $appState.outputLanguage) {
+                Text("Как при разговоре").tag("")
                 ForEach(Self.outputLanguageOptions.dropFirst(), id: \.self) { lang in
                     Text(lang).tag(lang)
                 }
             }
             .pickerStyle(.menu)
 
-            Text("When set, FreeFlow translates your speech into the selected language.")
+            Text("При выборе FreeFlow переводит речь на выбранный язык.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -1079,10 +1079,10 @@ struct GeneralSettingsView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Text("Shortcut Start Delay")
+                    Text("Задержка запуска горячей клавиши")
                         .font(.caption.weight(.semibold))
                     Spacer()
-                    Text("\(appState.shortcutStartDelayMilliseconds) ms")
+                    Text("\(appState.shortcutStartDelayMilliseconds) мс")
                         .font(.caption.monospacedDigit())
                         .foregroundStyle(.secondary)
                 }
@@ -1093,7 +1093,7 @@ struct GeneralSettingsView: View {
                     step: 0.025
                 )
 
-                Text("Applies before recording starts for both hold and tap shortcuts. Stopping still happens immediately.")
+                Text("Применяется перед началом записи для обоих горячих клавиш. Остановка происходит мгновенно.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -1105,14 +1105,14 @@ struct GeneralSettingsView: View {
     private var overlaySection: some View {
         VStack(alignment: .leading, spacing: 12) {
             OverlayStyleOptionRow(
-                title: "Minimalist menu-bar overlay",
-                subtitle: "Two slim wings flank the camera notch and stay inside the menu bar. Never covers app tabs or toolbars.",
+                title: "Минималистичный оверлей в строке меню",
+                subtitle: "Два узких крыла по бокам от выреза камеры остаются в строке меню. Никогда не закрывает вкладки или панели инструментов приложений.",
                 isMinimalist: true,
                 selection: $useCompactOverlay
             )
             OverlayStyleOptionRow(
-                title: "Drop-down pill",
-                subtitle: "Single pill hangs below the menu bar during recording. Larger and more visible, but covers a thin strip of whatever app is active.",
+                title: "Выпадающая таблетка",
+                subtitle: "Одна таблетка появляется под строкой меню во время записи. Крупнее и заметнее, но закрывает узкую полосу активного приложения.",
                 isMinimalist: false,
                 selection: $useCompactOverlay
             )
@@ -1128,11 +1128,11 @@ struct GeneralSettingsView: View {
     private var dictationAudioSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Toggle(
-                "Mute audio when dictation starts",
+                "Отключать звук при начале диктовки",
                 isOn: $appState.dictationAudioInterruptionEnabled
             )
 
-            Text("\(AppName.displayName) restores the audio state it changed when dictation ends.")
+            Text("\(AppName.displayName) восстанавливает состояние звука, которое изменил, когда диктовка завершается.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -1144,18 +1144,18 @@ struct GeneralSettingsView: View {
     /// monitors — disorienting on multi-display setups.
     private var overlayDisplaySection: some View {
         HStack {
-            Text("Show on")
+            Text("Показывать на")
                 .font(.system(size: 13))
             Spacer()
             Picker("", selection: $overlayDisplayID) {
-                Text("Active window (default)").tag(0)
-                Text("Primary display").tag(-1)
+                Text("Активное окно (по умолчанию)").tag(0)
+                Text("Основной дисплей").tag(-1)
                 ForEach(connectedScreenEntries, id: \.tag) { entry in
                     Text(entry.name).tag(entry.tag)
                 }
             }
             .labelsHidden()
-            .accessibilityLabel("Show on")
+            .accessibilityLabel("Показывать на")
             .pickerStyle(.menu)
             .frame(maxWidth: 240)
         }
@@ -1179,18 +1179,18 @@ struct GeneralSettingsView: View {
 
     private var commandModeSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Toggle("Enable Edit Mode", isOn: Binding(
+            Toggle("Включить режим редактирования", isOn: Binding(
                 get: { appState.isCommandModeEnabled },
                 set: { newValue in
                     _ = appState.setCommandModeEnabled(newValue)
                 }
             ))
 
-            Text("Transform highlighted text with a spoken instruction instead of dictating over it.")
+            Text("Преобразуйте выделенный текст голосовой инструкцией вместо диктовки поверх него.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Picker("Invocation Style", selection: Binding(
+            Picker("Стиль вызова", selection: Binding(
                 get: { appState.commandModeStyle },
                 set: { newValue in
                     _ = appState.setCommandModeStyle(newValue)
@@ -1206,16 +1206,16 @@ struct GeneralSettingsView: View {
             Group {
                 switch appState.commandModeStyle {
                 case .automatic:
-                    Text("If text is selected, your normal dictation shortcut transforms the selection instead of dictating over it.")
+                    Text("Если текст выделен, обычная горячая клавиша диктовки преобразует выделение вместо диктовки поверх.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 case .manual:
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Hold the extra modifier together with your normal dictation shortcut to transform selected text.")
+                        Text("Удерживайте дополнительный модификатор вместе с обычной горячей клавишей диктовки для преобразования выделенного текста.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
 
-                        Picker("Extra Modifier", selection: Binding(
+                        Picker("Дополнительный модификатор", selection: Binding(
                             get: { appState.commandModeManualModifier },
                             set: { newValue in
                                 _ = appState.setCommandModeManualModifier(newValue)
@@ -1243,18 +1243,18 @@ struct GeneralSettingsView: View {
 
     private var clipboardSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Toggle("Preserve clipboard after paste", isOn: $appState.preserveClipboard)
+            Toggle("Сохранять буфер обмена после вставки", isOn: $appState.preserveClipboard)
 
-            Text("\(AppName.displayName) will temporarily place the transcript on your clipboard to paste it, then restore whatever was there before. If you copy something else before the restore happens, \(AppName.displayName) leaves it alone.")
+            Text("\(AppName.displayName) временно помещает транскрипт в буфер обмена для вставки, затем восстанавливает то, что было там раньше. Если вы скопируете что-то ещё до восстановления, \(AppName.displayName) оставит это.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             Divider()
                 .padding(.vertical, 2)
 
-            Toggle("Say \"press enter\" to submit after paste", isOn: $appState.isPressEnterVoiceCommandEnabled)
+            Toggle("Говорить «нажми энтер» для отправки после вставки", isOn: $appState.isPressEnterVoiceCommandEnabled)
 
-            Text("When the transcription ends with \"press enter\", \(AppName.displayName) removes those words before cleanup, pastes the remaining transcript, then presses Return.")
+            Text("Когда транскрипт заканчивается словами «нажми энтер», \(AppName.displayName) удаляет эти слова перед обработкой, вставляет оставшийся транскрипт, затем нажимает Return.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -1264,13 +1264,13 @@ struct GeneralSettingsView: View {
 
     private var microphoneSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Select which microphone to use for recording.")
+            Text("Выберите микрофон для записи.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             VStack(spacing: 6) {
                 MicrophoneOptionRow(
-                    name: "System Default",
+                    name: "Системный",
                     isSelected: appState.selectedMicrophoneID == "default" || appState.selectedMicrophoneID.isEmpty,
                     action: { appState.selectedMicrophoneID = "default" }
                 )
@@ -1292,7 +1292,7 @@ struct GeneralSettingsView: View {
 
     private var soundVolumeSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Toggle("Play alert sounds", isOn: $appState.alertSoundsEnabled)
+            Toggle("Воспроизводить звуковые сигналы", isOn: $appState.alertSoundsEnabled)
 
             HStack(spacing: 12) {
                 Image(systemName: "speaker.fill")
@@ -1311,7 +1311,7 @@ struct GeneralSettingsView: View {
             .opacity(appState.alertSoundsEnabled ? 1 : 0.5)
 
             HStack(spacing: 8) {
-                Button("Preview") {
+                Button("Предпросмотр") {
                     let muted = SystemAudioStatus.isDefaultOutputMuted()
                     let volume = SystemAudioStatus.defaultOutputVolume()
                     withAnimation(.easeInOut(duration: 0.2)) {
@@ -1326,7 +1326,7 @@ struct GeneralSettingsView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "speaker.slash.fill")
                             .foregroundStyle(.orange)
-                        Text("System volume is muted or very low. Unmute to hear the preview.")
+                        Text("Системный звук отключён или очень тихий. Включите звук для предпросмотра.")
                             .foregroundStyle(.secondary)
                     }
                     .font(.caption)
@@ -1343,7 +1343,7 @@ struct GeneralSettingsView: View {
 
     private var vocabularySection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Words and phrases to preserve during post-processing.")
+            Text("Слова и фразы для сохранения при постобработке.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -1358,7 +1358,7 @@ struct GeneralSettingsView: View {
                     appState.customVocabulary = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
                 }
 
-            Text("Separate entries with commas, new lines, or semicolons.")
+            Text("Разделяйте записи запятыми, новыми строками или точками с запятой.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -1369,7 +1369,7 @@ struct GeneralSettingsView: View {
     private var permissionsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             permissionRow(
-                title: "Microphone",
+                title: "Микрофон",
                 icon: "mic.fill",
                 granted: micPermissionGranted,
                 action: {
@@ -1380,7 +1380,7 @@ struct GeneralSettingsView: View {
             )
 
             permissionRow(
-                title: "Accessibility",
+                title: "Универсальный доступ",
                 icon: "hand.raised.fill",
                 granted: appState.hasAccessibility,
                 action: {
@@ -1389,7 +1389,7 @@ struct GeneralSettingsView: View {
             )
 
             permissionRow(
-                title: "Screen Recording",
+                title: "Запись экрана",
                 icon: "camera.viewfinder",
                 granted: appState.hasScreenRecordingPermission,
                 action: {
@@ -1409,11 +1409,11 @@ struct GeneralSettingsView: View {
             if granted {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(.green)
-                Text("Granted")
+                Text("Разрешено")
                     .font(.caption)
                     .foregroundStyle(.green)
             } else {
-                Button("Grant Access") {
+                Button("Разрешить доступ") {
                     action()
                 }
                 .font(.caption)
@@ -1483,10 +1483,10 @@ struct PromptsSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                SettingsCard("System Prompt", icon: "text.bubble.fill") {
+                SettingsCard("Системный промпт", icon: "text.bubble.fill") {
                     systemPromptSection
                 }
-                SettingsCard("Context Prompt", icon: "eye.fill") {
+                SettingsCard("Промпт контекста", icon: "eye.fill") {
                     contextPromptSection
                 }
             }
@@ -1511,7 +1511,7 @@ struct PromptsSettingsView: View {
             && appState.customSystemPromptLastModified < PostProcessingService.defaultSystemPromptDate
 
         return VStack(alignment: .leading, spacing: 10) {
-            Text("Controls how raw transcriptions are cleaned up.")
+            Text("Управляет очисткой сырых транскриптов.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -1519,14 +1519,14 @@ struct PromptsSettingsView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "arrow.triangle.2.circlepath")
                         .foregroundStyle(.blue)
-                    Text("A newer default prompt is available.")
+                    Text("Доступен новый промпт по умолчанию.")
                         .font(.caption.weight(.semibold))
                     Spacer()
-                    Button("View Default") {
+                    Button("Просмотреть") {
                         showDefaultSystemPrompt.toggle()
                     }
                     .font(.caption)
-                    Button("Switch to Default") {
+                    Button("Использовать по умолчанию") {
                         customSystemPromptInput = PostProcessingService.defaultSystemPrompt
                         appState.customSystemPrompt = ""
                         appState.customSystemPromptLastModified = ""
@@ -1541,10 +1541,10 @@ struct PromptsSettingsView: View {
             if showDefaultSystemPrompt {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
-                        Text("Default System Prompt")
+                        Text("Системный промпт по умолчанию")
                             .font(.caption.weight(.semibold))
                         Spacer()
-                        Button("Hide") {
+                        Button("Скрыть") {
                             showDefaultSystemPrompt = false
                         }
                         .font(.caption)
@@ -1585,17 +1585,17 @@ struct PromptsSettingsView: View {
 
             HStack {
                 if isCustom {
-                    Label("Using custom prompt", systemImage: "pencil")
+                    Label("Используется пользовательский промпт", systemImage: "pencil")
                         .font(.caption)
                         .foregroundStyle(.blue)
                 } else {
-                    Label("Using default", systemImage: "checkmark.circle")
+                    Label("Используется по умолчанию", systemImage: "checkmark.circle")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
                 if isCustom {
-                    Button("Reset to Default") {
+                    Button("Сбросить") {
                         customSystemPromptInput = PostProcessingService.defaultSystemPrompt
                         appState.customSystemPrompt = ""
                         appState.customSystemPromptLastModified = ""
@@ -1608,9 +1608,9 @@ struct PromptsSettingsView: View {
 
             // Test section
             VStack(alignment: .leading, spacing: 8) {
-                Text("Test System Prompt")
+                Text("Тест системного промпта")
                     .font(.caption.weight(.semibold))
-                Text("Enter sample text to see how the current prompt cleans it up.")
+                Text("Введите текст, чтобы увидеть, как текущий промпт его очистит.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -1629,17 +1629,17 @@ struct PromptsSettingsView: View {
                         if systemTestRunning {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Running...")
+                            Text("Выполняется...")
                         } else {
                             Image(systemName: "play.fill")
-                            Text("Test System Prompt")
+                            Text("Тест системного промпта")
                         }
                     }
                 }
                 .disabled(systemTestRunning || appState.apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || systemTestInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
 
                 if appState.apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    Label("API key required to test", systemImage: "exclamationmark.triangle")
+                    Label("Для теста нужен ключ API", systemImage: "exclamationmark.triangle")
                         .font(.caption)
                         .foregroundStyle(.orange)
                 }
@@ -1652,9 +1652,9 @@ struct PromptsSettingsView: View {
 
                 if let output = systemTestOutput {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Result:")
+                        Text("Результат:")
                             .font(.caption.weight(.semibold))
-                        Text(output.isEmpty ? "(empty — no output)" : output)
+                        Text(output.isEmpty ? "(пусто — нет вывода)" : output)
                             .font(.system(.caption, design: .monospaced))
                             .textSelection(.enabled)
                             .padding(8)
@@ -1665,7 +1665,7 @@ struct PromptsSettingsView: View {
                 }
 
                 if let prompt = systemTestPrompt {
-                    DisclosureGroup("Full prompt sent") {
+                    DisclosureGroup("Полный отправленный промпт") {
                         Text(prompt)
                             .font(.system(.caption2, design: .monospaced))
                             .textSelection(.enabled)
@@ -1695,11 +1695,11 @@ struct PromptsSettingsView: View {
         let vocabulary = appState.customVocabulary
 
         let context = AppContext(
-            appName: "\(AppName.displayName) Settings",
+            appName: "\(AppName.displayName) Настройки",
             bundleIdentifier: "com.zachlatta.freeflow",
-            windowTitle: "System Prompt Test",
+            windowTitle: "Тест системного промпта",
             selectedText: nil,
-            currentActivity: "User is testing the system prompt in \(AppName.displayName) settings.",
+            currentActivity: "Пользователь тестирует системный промпт в настройках \(AppName.displayName).",
             contextSystemPrompt: nil,
             contextPrompt: nil,
             screenshotDataURL: nil,
@@ -1738,7 +1738,7 @@ struct PromptsSettingsView: View {
             && appState.customContextPromptLastModified < AppContextService.defaultContextPromptDate
 
         return VStack(alignment: .leading, spacing: 10) {
-            Text("Controls how \(AppName.displayName) infers your current activity from app metadata and screenshots.")
+            Text("Управляет тем, как \(AppName.displayName) определяет вашу текущую активность из метаданных приложений и скриншотов.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -1746,14 +1746,14 @@ struct PromptsSettingsView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "arrow.triangle.2.circlepath")
                         .foregroundStyle(.blue)
-                    Text("A newer default prompt is available.")
+                    Text("Доступен новый промпт по умолчанию.")
                         .font(.caption.weight(.semibold))
                     Spacer()
-                    Button("View Default") {
+                    Button("Просмотреть") {
                         showDefaultContextPrompt.toggle()
                     }
                     .font(.caption)
-                    Button("Switch to Default") {
+                    Button("Использовать по умолчанию") {
                         customContextPromptInput = AppContextService.defaultContextPrompt
                         appState.customContextPrompt = ""
                         appState.customContextPromptLastModified = ""
@@ -1768,10 +1768,10 @@ struct PromptsSettingsView: View {
             if showDefaultContextPrompt {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
-                        Text("Default Context Prompt")
+                        Text("Промпт контекста по умолчанию")
                             .font(.caption.weight(.semibold))
                         Spacer()
-                        Button("Hide") {
+                        Button("Скрыть") {
                             showDefaultContextPrompt = false
                         }
                         .font(.caption)
@@ -1812,17 +1812,17 @@ struct PromptsSettingsView: View {
 
             HStack {
                 if isCustom {
-                    Label("Using custom prompt", systemImage: "pencil")
+                    Label("Используется пользовательский промпт", systemImage: "pencil")
                         .font(.caption)
                         .foregroundStyle(.blue)
                 } else {
-                    Label("Using default", systemImage: "checkmark.circle")
+                    Label("Используется по умолчанию", systemImage: "checkmark.circle")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
                 if isCustom {
-                    Button("Reset to Default") {
+                    Button("Сбросить") {
                         customContextPromptInput = AppContextService.defaultContextPrompt
                         appState.customContextPrompt = ""
                         appState.customContextPromptLastModified = ""
@@ -1834,35 +1834,35 @@ struct PromptsSettingsView: View {
             Divider()
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Screenshot Resolution")
+                Text("Разрешение скриншота")
                     .font(.caption.weight(.semibold))
 
-                Text("Controls the maximum image dimension sent for context inference.")
+                Text("Управляет максимальным размером изображения для вывода контекста.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
                 Picker("", selection: $appState.contextScreenshotMaxDimension) {
                     ForEach(AppState.contextScreenshotDimensionOptions, id: \.self) { dimension in
-                        Text("\(dimension) px").tag(dimension)
+                        Text("\(dimension) пкс").tag(dimension)
                     }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
-                .accessibilityLabel("Screenshot Resolution")
+                .accessibilityLabel("Разрешение скриншота")
 
                 HStack {
                     if appState.contextScreenshotMaxDimension == AppState.defaultContextScreenshotMaxDimension {
-                        Label("Using default", systemImage: "checkmark.circle")
+                        Label("Используется по умолчанию", systemImage: "checkmark.circle")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     } else {
-                        Label("Using custom value", systemImage: "pencil")
+                        Label("Используется пользовательское значение", systemImage: "pencil")
                             .font(.caption)
                             .foregroundStyle(.blue)
                     }
                     Spacer()
                     if appState.contextScreenshotMaxDimension != AppState.defaultContextScreenshotMaxDimension {
-                        Button("Reset to Default") {
+                        Button("Сбросить") {
                             appState.contextScreenshotMaxDimension = AppState.defaultContextScreenshotMaxDimension
                         }
                         .font(.caption)
@@ -1874,9 +1874,9 @@ struct PromptsSettingsView: View {
 
             // Test section
             VStack(alignment: .leading, spacing: 8) {
-                Text("Test Context Prompt")
+                Text("Тест промпта контекста")
                     .font(.caption.weight(.semibold))
-                Text("Captures a screenshot and metadata from the frontmost app, then runs the context prompt to infer activity.")
+                Text("Делает скриншот и собирает метаданные активного приложения, затем запускает промпт контекста для определения активности.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
@@ -1887,17 +1887,17 @@ struct PromptsSettingsView: View {
                         if contextTestRunning {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Running...")
+                            Text("Выполняется...")
                         } else {
                             Image(systemName: "play.fill")
-                            Text("Test Context Prompt")
+                            Text("Тест промпта контекста")
                         }
                     }
                 }
                 .disabled(contextTestRunning || appState.apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
 
                 if appState.apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    Label("API key required to test", systemImage: "exclamationmark.triangle")
+                    Label("Для теста нужен ключ API", systemImage: "exclamationmark.triangle")
                         .font(.caption)
                         .foregroundStyle(.orange)
                 }
@@ -1910,9 +1910,9 @@ struct PromptsSettingsView: View {
 
                 if let output = contextTestOutput {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Result:")
+                        Text("Результат:")
                             .font(.caption.weight(.semibold))
-                        Text(output.isEmpty ? "(empty — no output)" : output)
+                        Text(output.isEmpty ? "(пусто — нет вывода)" : output)
                             .font(.system(.caption, design: .monospaced))
                             .textSelection(.enabled)
                             .padding(8)
@@ -1923,7 +1923,7 @@ struct PromptsSettingsView: View {
                 }
 
                 if let prompt = contextTestPrompt {
-                    DisclosureGroup("Full prompt sent") {
+                    DisclosureGroup("Полный отправленный промпт") {
                         Text(prompt)
                             .font(.system(.caption2, design: .monospaced))
                             .textSelection(.enabled)
@@ -1951,7 +1951,7 @@ struct PromptsSettingsView: View {
                     contextTestOutput = context.contextSummary
                     contextTestPrompt = prompt
                 } else {
-                    contextTestError = "Context inference returned no result. This may be a permissions issue or the API could not be reached."
+                    contextTestError = "Вывод контекста не дал результата. Это может быть проблемой разрешений или API недоступен."
                     contextTestOutput = context.contextSummary
                 }
                 contextTestRunning = false
@@ -1970,14 +1970,14 @@ struct RunLogView: View {
         VStack(spacing: 0) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Run Log")
+                    Text("Журнал")
                         .font(.headline)
-                    Text("Stored locally. Only the \(appState.maxPipelineHistoryCount) most recent runs are kept.")
+                    Text("Хранится локально. Сохраняются только \(appState.maxPipelineHistoryCount) последних запусков.")
                         .font(.caption)
                         .foregroundStyle(.tertiary)
                 }
                 Spacer()
-                Button("Clear History") {
+                Button("Очистить историю") {
                     appState.clearPipelineHistory()
                 }
                 .disabled(appState.pipelineHistory.isEmpty)
@@ -1991,7 +1991,7 @@ struct RunLogView: View {
             if appState.pipelineHistory.isEmpty {
                 VStack {
                     Spacer()
-                    Text("No runs yet. Use dictation to populate history.")
+                    Text("Запусков пока нет. Используйте диктовку, чтобы заполнить историю.")
                         .foregroundStyle(.secondary)
                     Spacer()
                 }
@@ -2090,7 +2090,7 @@ struct RunLogEntryView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text(item.timestamp.formatted(date: .numeric, time: .standard))
                                 .font(.subheadline.weight(.semibold))
-                            Text(item.postProcessedTranscript.isEmpty ? "(no transcript)" : item.postProcessedTranscript)
+                            Text(item.postProcessedTranscript.isEmpty ? "(нет транскрипта)" : item.postProcessedTranscript)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                                 .lineLimit(1)
@@ -2121,13 +2121,13 @@ struct RunLogEntryView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(isRetrying)
-                        .help("Retry transcription")
+                        .help("Повторить транскрипцию")
                     } else {
                         Color.clear
                             .frame(width: actionIconSize, height: actionIconSize)
                     }
 
-                    actionIconButton(systemName: "square.and.arrow.up", help: "Export run log") {
+                    actionIconButton(systemName: "square.and.arrow.up", help: "Экспорт журнала") {
                         TestCaseExporter.exportWithSavePanel(
                             item: item,
                             audioDirURL: AppState.audioStorageDirectory()
@@ -2137,13 +2137,13 @@ struct RunLogEntryView: View {
                     actionIconButton(
                         systemName: copiedTranscript ? "checkmark" : "doc.on.doc",
                         color: copiedTranscript ? .green : .secondary,
-                        help: copiedTranscript ? "Copied transcript" : "Copy transcript",
+                        help: copiedTranscript ? "Транскрипт скопирован" : "Копировать транскрипт",
                         disabled: copyableTranscript.isEmpty
                     ) {
                         copyTranscriptToPasteboard()
                     }
 
-                    actionIconButton(systemName: "trash", help: "Delete this run") {
+                    actionIconButton(systemName: "trash", help: "Удалить этот запуск") {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             appState.deleteHistoryEntry(id: item.id)
                         }
@@ -2166,7 +2166,7 @@ struct RunLogEntryView: View {
                             Image(systemName: "waveform.slash")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
-                            Text("No audio recorded")
+                            Text("Аудио не записано")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -2175,7 +2175,7 @@ struct RunLogEntryView: View {
                     // Custom vocabulary
                     if !item.customVocabulary.isEmpty {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Custom Vocabulary")
+                            Text("Пользовательский словарь")
                                 .font(.caption.weight(.semibold))
                             FlowLayout(spacing: 4) {
                                 ForEach(parseVocabulary(item.customVocabulary), id: \.self) { word in
@@ -2192,13 +2192,13 @@ struct RunLogEntryView: View {
 
                     // Pipeline steps
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Pipeline")
+                        Text("Конвейер")
                             .font(.caption.weight(.semibold))
 
                         // Step 1: Context Capture
                         PipelineStepView(
                             number: 1,
-                            title: "Capture Context",
+                            title: "Захват контекста",
                             content: {
                                 VStack(alignment: .leading, spacing: 6) {
                                     if let dataURL = item.contextScreenshotDataURL,
@@ -2215,7 +2215,7 @@ struct RunLogEntryView: View {
                                             showContextPrompt.toggle()
                                         } label: {
                                             HStack(spacing: 4) {
-                                                Text(showContextPrompt ? "Hide Prompt" : "Show Prompt")
+                                                Text(showContextPrompt ? "Скрыть промпт" : "Показать промпт")
                                                     .font(.caption)
                                                 Image(systemName: showContextPrompt ? "chevron.up" : "chevron.down")
                                                     .font(.caption2)
@@ -2241,7 +2241,7 @@ struct RunLogEntryView: View {
                                             .foregroundStyle(.secondary)
                                             .textSelection(.enabled)
                                     } else {
-                                        Text("No context captured")
+                                        Text("Контекст не захвачен")
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
                                     }
@@ -2252,10 +2252,10 @@ struct RunLogEntryView: View {
                         // Step 2: Transcribe Audio
                         PipelineStepView(
                             number: 2,
-                            title: "Transcribe Audio",
+                            title: "Транскрипция аудио",
                             content: {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text("Sent audio to the configured transcription model")
+                                    Text("Аудио отправлено настроенной модели транскрипции")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                         .textSelection(.enabled)
@@ -2279,10 +2279,10 @@ struct RunLogEntryView: View {
                                                         .contentShape(Rectangle())
                                                 }
                                                 .buttonStyle(.plain)
-                                                .help(copiedRawTranscript ? "Copied literal transcript" : "Copy literal transcript")
+                                                .help(copiedRawTranscript ? "Буквальный транскрипт скопирован" : "Копировать буквальный транскрипт")
                                             }
                                     } else {
-                                        Text("(empty transcript)")
+                                        Text("(пустой транскрипт)")
                                             .font(.caption)
                                             .foregroundStyle(.secondary)
                                     }
@@ -2293,7 +2293,7 @@ struct RunLogEntryView: View {
                         // Step 3: Post-Process
                         PipelineStepView(
                             number: 3,
-                            title: "Post-Process",
+                            title: "Постобработка",
                             content: {
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(item.postProcessingStatus)
@@ -2306,7 +2306,7 @@ struct RunLogEntryView: View {
                                             showPostProcessingPrompt.toggle()
                                         } label: {
                                             HStack(spacing: 4) {
-                                                Text(showPostProcessingPrompt ? "Hide Prompt" : "Show Prompt")
+                                                Text(showPostProcessingPrompt ? "Скрыть промпт" : "Показать промпт")
                                                     .font(.caption)
                                                 Image(systemName: showPostProcessingPrompt ? "chevron.up" : "chevron.down")
                                                     .font(.caption2)
@@ -2346,7 +2346,7 @@ struct RunLogEntryView: View {
                                                         .contentShape(Rectangle())
                                                 }
                                                 .buttonStyle(.plain)
-                                                .help(copiedCleanedTranscript ? "Copied cleaned transcript" : "Copy cleaned transcript")
+                                                .help(copiedCleanedTranscript ? "Очищенный транскрипт скопирован" : "Копировать очищенный транскрипт")
                                             }
                                     }
                                 }
@@ -2622,7 +2622,7 @@ struct VoiceMacrosSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                SettingsCard("Voice Macros", icon: "music.mic") {
+                SettingsCard("Голосовые макросы", icon: "music.mic") {
                     macrosSection
                 }
             }
@@ -2636,12 +2636,12 @@ struct VoiceMacrosSettingsView: View {
     private var macrosSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Bypass post-processing and immediately paste your predefined text.")
+                Text("Обходит постобработку и сразу вставляет предопределённый текст.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
                 Button(action: { showingAddMacro = true }) {
-                    Text("Add Macro")
+                    Text("Добавить макрос")
                 }
             }
 
@@ -2651,10 +2651,10 @@ struct VoiceMacrosSettingsView: View {
                         .font(.system(size: 30))
                         .foregroundStyle(.tertiary)
                         .padding(.bottom, 4)
-                    Text("No Voice Macros Yet")
+                    Text("Голосовых макросов пока нет")
                         .font(.headline)
                         .foregroundStyle(.secondary)
-                    Text("Click 'Add Macro' to define your first voice macro.")
+                    Text("Нажмите «Добавить макрос», чтобы создать первый голосовой макрос.")
                         .font(.caption)
                         .foregroundStyle(.tertiary)
                         .multilineTextAlignment(.center)
@@ -2669,14 +2669,14 @@ struct VoiceMacrosSettingsView: View {
                                 Text(macro.command)
                                     .font(.headline)
                                 Spacer()
-                                Button("Edit") {
+                                Button("Изменить") {
                                     editingMacro = macro
                                     showingAddMacro = true
                                 }
                                 .buttonStyle(.borderless)
                                 .font(.caption)
                                 
-                                Button("Delete") {
+                                Button("Удалить") {
                                     appState.voiceMacros.removeAll { $0.id == macro.id }
                                 }
                                 .buttonStyle(.borderless)
@@ -2709,16 +2709,16 @@ struct VoiceMacroEditorView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text(macro == nil ? "Add Macro" : "Edit Macro")
+            Text(macro == nil ? "Добавить макрос" : "Изменить макрос")
                 .font(.headline)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Voice Command (What you say)")
+                Text("Голосовая команда (что вы говорите)")
                     .font(.caption.weight(.semibold))
-                TextField("e.g. debugging prompt", text: $command)
+                TextField("например, отладочный промпт", text: $command)
                     .textFieldStyle(.roundedBorder)
 
-                Text("Text (What gets pasted)")
+                Text("Текст (что будет вставлено)")
                     .font(.caption.weight(.semibold))
                     .padding(.top, 8)
                 TextEditor(text: $payload)
@@ -2728,12 +2728,12 @@ struct VoiceMacroEditorView: View {
             }
 
             HStack {
-                Button("Cancel") {
+                Button("Отмена") {
                     isPresented = false
                     macro = nil
                 }
                 Spacer()
-                Button("Save") {
+                Button("Сохранить") {
                     let newMacro = VoiceMacro(
                         id: macro?.id ?? UUID(),
                         command: command.trimmingCharacters(in: .whitespacesAndNewlines),

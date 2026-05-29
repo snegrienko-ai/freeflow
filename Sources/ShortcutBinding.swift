@@ -8,8 +8,8 @@ enum CommandModeStyle: String, CaseIterable, Codable, Identifiable {
 
     var title: String {
         switch self {
-        case .automatic: return "Automatic"
-        case .manual: return "Manual"
+        case .automatic: return "Автоматически"
+        case .manual: return "Вручную"
         }
     }
 }

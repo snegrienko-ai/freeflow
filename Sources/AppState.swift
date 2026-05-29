@@ -37,11 +37,11 @@ enum SettingsTab: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .general: return "General"
-        case .prompts: return "Prompts"
-        case .macros: return "Voice Macros"
-        case .runLog: return "Run Log"
-        case .debug: return "Debug"
+        case .general: return "Основные"
+        case .prompts: return "Промпты"
+        case .macros: return "Голосовые макросы"
+        case .runLog: return "Журнал"
+        case .debug: return "Отладка"
         }
     }
 
@@ -533,13 +533,13 @@ final class AppState: ObservableObject, @unchecked Sendable {
     @Published var retryingItemIDs: Set<UUID> = []
     @Published var lastTranscript: String = ""
     @Published var errorMessage: String?
-    @Published var statusText: String = "Ready"
+    @Published var statusText: String = "Готово"
     @Published var hasAccessibility = false
     @Published var hotkeyMonitoringErrorMessage: String?
     @Published var isDebugOverlayActive = false
     @Published var selectedSettingsTab: SettingsTab? = .general
     @Published var pipelineHistory: [PipelineHistoryItem] = []
-    @Published var debugStatusMessage = "Idle"
+    @Published var debugStatusMessage = "Ожидание"
     @Published var debugShowsUpdateReminderAfterDictation = false
     @Published var lastRawTranscript = ""
     @Published var lastPostProcessedTranscript = ""
@@ -1918,7 +1918,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
         activeRecordingTriggerMode = triggerMode
         guard hasAccessibility else {
             errorMessage = "Accessibility permission required. Grant access in System Settings > Privacy & Security > Accessibility."
-            statusText = "No Accessibility"
+            statusText = "Нет доступа"
             activeRecordingTriggerMode = nil
             currentSessionIntent = .dictation
             shortcutSessionController.reset()
@@ -1958,7 +1958,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
         guard granted else {
             let message = "Screen recording permission not granted. Enable in System Settings > Privacy & Security > Screen Recording."
             errorMessage = message
-            statusText = "Screenshot Required"
+            statusText = "Нужен скриншот"
             activeRecordingTriggerMode = nil
             currentSessionIntent = .dictation
             shortcutSessionController.reset()
@@ -2019,7 +2019,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
                         }
                     } else {
                         strongSelf.errorMessage = "Microphone permission denied. Grant access in System Settings > Privacy & Security > Microphone."
-                        strongSelf.statusText = "No Microphone"
+                        strongSelf.statusText = "Нет микрофона"
                         strongSelf.activeRecordingTriggerMode = nil
                         strongSelf.currentSessionIntent = .dictation
                         strongSelf.shortcutSessionController.reset()
@@ -2030,7 +2030,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
             return false
         default:
             errorMessage = "Microphone permission denied. Grant access in System Settings > Privacy & Security > Microphone."
-            statusText = "No Microphone"
+            statusText = "Нет микрофона"
             activeRecordingTriggerMode = nil
             currentSessionIntent = .dictation
             shortcutSessionController.reset()
@@ -2207,7 +2207,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
         shortcutSessionController.reset()
         endCriticalDictationActivity()
         errorMessage = formattedRecordingStartError(error)
-        statusText = "Error"
+        statusText = "Ошибка"
         overlayManager.dismiss()
         refreshAvailableMicrophonesIfNeeded()
     }
@@ -2232,11 +2232,11 @@ final class AppState: ObservableObject, @unchecked Sendable {
 
     func showMicrophonePermissionAlert() {
         let alert = NSAlert()
-        alert.messageText = "Microphone Permission Required"
-        alert.informativeText = "\(AppName.displayName) cannot record audio without Microphone access.\n\nGo to System Settings > Privacy & Security > Microphone and enable \(AppName.displayName)."
+alert.messageText = "Требуется доступ к микрофону"
+    alert.informativeText = "\(AppName.displayName) не может записывать аудио без доступа к микрофону.\n\nПерейдите в Системные настройки > Конфиденциальность и безопасность > Микрофон и включите \(AppName.displayName)."
         alert.alertStyle = .critical
-        alert.addButton(withTitle: "Open System Settings")
-        alert.addButton(withTitle: "Dismiss")
+        alert.addButton(withTitle: "Открыть настройки")
+        alert.addButton(withTitle: "Отмена")
         alert.icon = NSImage(systemSymbolName: "mic.fill", accessibilityDescription: nil)
 
         let response = alert.runModal()
@@ -2247,11 +2247,11 @@ final class AppState: ObservableObject, @unchecked Sendable {
 
     func showAccessibilityAlert() {
         let alert = NSAlert()
-        alert.messageText = "Accessibility Permission Required"
-        alert.informativeText = "\(AppName.displayName) cannot type transcriptions without Accessibility access.\n\nGo to System Settings > Privacy & Security > Accessibility and enable \(AppName.displayName)."
+alert.messageText = "Требуется доступ к универсальному доступу"
+    alert.informativeText = "\(AppName.displayName) не может вводить текст без доступа к универсальному доступу.\n\nПерейдите в Системные настройки > Конфиденциальность и безопасность > Универсальный доступ и включите \(AppName.displayName)."
         alert.alertStyle = .critical
-        alert.addButton(withTitle: "Open System Settings")
-        alert.addButton(withTitle: "Dismiss")
+        alert.addButton(withTitle: "Открыть настройки")
+        alert.addButton(withTitle: "Отмена")
         alert.icon = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
 
         let response = alert.runModal()
@@ -2476,7 +2476,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
                 self.audioRecorder.cleanup()
                 self.endCriticalDictationActivity()
                 self.errorMessage = "No audio recorded"
-                self.statusText = "Error"
+                self.statusText = "Ошибка"
                 self.overlayManager.dismiss()
                 self.refreshAvailableMicrophonesIfNeeded()
                 return
@@ -2603,9 +2603,9 @@ final class AppState: ObservableObject, @unchecked Sendable {
                         self.lastTranscript = trimmedFinalTranscript
                         self.isTranscribing = false
                         self.endCriticalDictationActivity()
-                        self.debugStatusMessage = "Done"
+                        self.debugStatusMessage = "Готово"
                         let completionStatusText = self.preserveClipboard ? "Pasted at cursor!" : "Copied to clipboard!"
-                        let enterOnlyStatusText = "Pressed Enter"
+                        let enterOnlyStatusText = "Нажат Enter"
                         let shouldPressEnterAfterPaste = parsedTranscript.shouldPressEnterAfterPaste
 
                         let shouldPersistRawDictationFallback: Bool
@@ -2674,7 +2674,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
                         self.errorMessage = error.localizedDescription
                         self.isTranscribing = false
                         self.endCriticalDictationActivity()
-                        self.statusText = "Error"
+                        self.statusText = "Ошибка"
                         self.overlayManager.dismiss()
                         self.lastPostProcessedTranscript = ""
                         self.lastRawTranscript = ""
@@ -2906,7 +2906,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
             shortcutSessionController.reset()
             activeRecordingTriggerMode = nil
             endCriticalDictationActivity()
-            statusText = "Screenshot Required"
+            statusText = "Нужен скриншот"
             overlayManager.dismiss()
 
             playAlertSound(named: "Basso")
@@ -2923,11 +2923,11 @@ final class AppState: ObservableObject, @unchecked Sendable {
 
     private func showScreenshotPermissionAlert(message: String) {
         let alert = NSAlert()
-        alert.messageText = "Screen Recording Permission Required"
-        alert.informativeText = "\(message)\n\n\(AppName.displayName) requires Screen Recording permission to capture screenshots for context-aware transcription.\n\nGo to System Settings > Privacy & Security > Screen Recording and enable \(AppName.displayName)."
+alert.messageText = "Требуется доступ к записи экрана"
+    alert.informativeText = "\(message)\n\n\(AppName.displayName) требуется доступ к записи экрана для создания скриншотов в контекстно-зависимой транскрипции.\n\nПерейдите в Системные настройки > Конфиденциальность и безопасность > Запись экрана и включите \(AppName.displayName)."
         alert.alertStyle = .critical
-        alert.addButton(withTitle: "Open System Settings")
-        alert.addButton(withTitle: "Dismiss")
+        alert.addButton(withTitle: "Открыть настройки")
+        alert.addButton(withTitle: "Отмена")
         alert.icon = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
 
         let response = alert.runModal()
@@ -2938,10 +2938,10 @@ final class AppState: ObservableObject, @unchecked Sendable {
 
     private func showScreenshotCaptureErrorAlert(message: String) {
         let alert = NSAlert()
-        alert.messageText = "Screenshot Capture Failed"
-        alert.informativeText = "\(message)\n\nA screenshot is required for context-aware transcription. Recording has been stopped."
+alert.messageText = "Не удалось сделать скриншот"
+    alert.informativeText = "\(message)\n\nДля контекстно-зависимой транскрипции требуется скриншот. Запись остановлена."
         alert.alertStyle = .critical
-        alert.addButton(withTitle: "Dismiss")
+        alert.addButton(withTitle: "Отмена")
         alert.icon = NSImage(systemSymbolName: "camera.viewfinder", accessibilityDescription: nil)
         _ = alert.runModal()
     }
@@ -3228,7 +3228,7 @@ final class AppState: ObservableObject, @unchecked Sendable {
             if let statuses, !statuses.contains(self.statusText) {
                 return
             }
-            self.statusText = "Ready"
+            self.statusText = "Готово"
         }
     }
 }

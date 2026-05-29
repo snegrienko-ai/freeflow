@@ -1053,7 +1053,7 @@ struct UpdateAvailableOverlayView: View {
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(.white)
 
-                Text("Update Available")
+                Text("Доступно обновление")
                     .font(.system(size: 11, weight: .semibold))
                     .lineLimit(1)
             }

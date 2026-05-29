@@ -60,7 +60,7 @@ struct MenuBarView: View {
                 Button {
                     appState.requestScreenCapturePermission()
                 } label: {
-                    Label("Screen Recording Permission Needed", systemImage: "camera.viewfinder")
+                    Label("Нужен доступ к записи экрана", systemImage: "camera.viewfinder")
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.white)
@@ -78,7 +78,7 @@ struct MenuBarView: View {
                 Button {
                     appState.showAccessibilityAlert()
                 } label: {
-                    Label("Accessibility Required", systemImage: "exclamationmark.triangle.fill")
+                    Label("Нужен доступ к универсальному доступу", systemImage: "exclamationmark.triangle.fill")
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.white)
@@ -93,7 +93,7 @@ struct MenuBarView: View {
 
             // Status
             if appState.isRecording {
-                Label("Recording...", systemImage: "record.circle")
+                Label("Запись...", systemImage: "record.circle")
                     .foregroundStyle(.red)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 6)
@@ -113,7 +113,7 @@ struct MenuBarView: View {
             Divider()
 
             // Manual toggle
-            Button(appState.isRecording ? "Stop Recording" : "Start Dictating") {
+            Button(appState.isRecording ? "Остановить запись" : "Начать диктовку") {
                 appState.toggleRecording()
             }
             .disabled(appState.isTranscribing)
@@ -140,7 +140,7 @@ struct MenuBarView: View {
 
             if !appState.lastTranscript.isEmpty && !appState.isRecording && !appState.isTranscribing {
                 Button(appState.copyAgainShortcut.isDisabled
-                    ? "Paste Again"
+                    ? "Вставить снова"
                     : "Paste Again  (\(appState.copyAgainShortcut.displayName))") {
                     appState.copyLastTranscriptToPasteboard()
                 }
@@ -156,9 +156,9 @@ struct MenuBarView: View {
                     .frame(maxWidth: 280, alignment: .leading)
             }
 
-            Menu("History") {
+            Menu("История") {
                 if recentHistoryItems.isEmpty {
-                    Text("No transcripts yet")
+                    Text("Пока нет транскриптов")
                 } else {
                     ForEach(recentHistoryItems) { item in
                         let transcript = transcriptText(for: item)
@@ -173,21 +173,21 @@ struct MenuBarView: View {
                     Divider()
                 }
 
-                Button("Open Run Log") {
+                Button("Открыть журнал") {
                     openRunLog()
                 }
             }
 
             Divider()
 
-            Menu("Hold Shortcut") {
+            Menu("Макрос «Удержание»") {
                 Button {
                     _ = appState.setShortcut(.disabled, for: .hold)
                 } label: {
                     if appState.holdShortcut.isDisabled {
-                        Text("✓ Disabled")
+                        Text("✓ Отключено")
                     } else {
-                        Text("  Disabled")
+                        Text("  Отключено")
                     }
                 }
 
@@ -218,20 +218,20 @@ struct MenuBarView: View {
                 }
 
                 Divider()
-                Button("Customize…") {
+                Button("Настроить…") {
                     appState.selectedSettingsTab = .general
                     NotificationCenter.default.post(name: .showSettings, object: nil)
                 }
             }
 
-            Menu("Toggle Shortcut") {
+            Menu("Макрос «Переключение»") {
                 Button {
                     _ = appState.setShortcut(.disabled, for: .toggle)
                 } label: {
                     if appState.toggleShortcut.isDisabled {
-                        Text("✓ Disabled")
+                        Text("✓ Отключено")
                     } else {
-                        Text("  Disabled")
+                        Text("  Отключено")
                     }
                 }
 
@@ -262,20 +262,20 @@ struct MenuBarView: View {
                 }
 
                 Divider()
-                Button("Customize…") {
+                Button("Настроить…") {
                     appState.selectedSettingsTab = .general
                     NotificationCenter.default.post(name: .showSettings, object: nil)
                 }
             }
 
-            Menu("Paste Again Shortcut") {
+            Menu("Макрос «Вставить снова»") {
                 Button {
                     _ = appState.setShortcut(.disabled, for: .copyAgain)
                 } label: {
                     if appState.copyAgainShortcut.isDisabled {
-                        Text("✓ Disabled")
+                        Text("✓ Отключено")
                     } else {
-                        Text("  Disabled")
+                        Text("  Отключено")
                     }
                 }
 
@@ -306,7 +306,7 @@ struct MenuBarView: View {
                 }
 
                 Divider()
-                Button("Customize…") {
+                Button("Настроить…") {
                     appState.selectedSettingsTab = .general
                     NotificationCenter.default.post(name: .showSettings, object: nil)
                 }
@@ -317,9 +317,9 @@ struct MenuBarView: View {
                     appState.selectedMicrophoneID = "default"
                 } label: {
                     if appState.selectedMicrophoneID == "default" || appState.selectedMicrophoneID.isEmpty {
-                        Text("✓ System Default")
+                        Text("✓ Системный")
                     } else {
-                        Text("  System Default")
+                        Text("  Системный")
                     }
                 }
                 ForEach(appState.availableMicrophones) { device in
@@ -335,11 +335,11 @@ struct MenuBarView: View {
                 }
             }
 
-            Button("Re-run Setup...") {
+            Button("Повторить настройку...") {
                 NotificationCenter.default.post(name: .showSetup, object: nil)
             }
 
-            Button("Settings") {
+            Button("Настройки") {
                 NotificationCenter.default.post(name: .showSettings, object: nil)
             }
 
@@ -353,7 +353,7 @@ struct MenuBarView: View {
                         ProgressView()
                             .controlSize(.small)
                     }
-                    Text(updateManager.isChecking ? "Checking for Updates..." : "Check for Updates")
+                    Text(updateManager.isChecking ? "Проверка обновлений..." : "Проверить обновления")
                 }
             }
             .disabled(updateManager.isChecking)
@@ -364,7 +364,7 @@ struct MenuBarView: View {
                 switch updateManager.updateStatus {
                 case .downloading:
                     VStack(spacing: 4) {
-                        Text("Downloading update... \(Int((updateManager.downloadProgress ?? 0) * 100))%")
+                        Text("Загрузка обновления... \(Int((updateManager.downloadProgress ?? 0) * 100))%")
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(.white)
                         ProgressView(value: updateManager.downloadProgress ?? 0)
@@ -380,7 +380,7 @@ struct MenuBarView: View {
                     HStack(spacing: 6) {
                         ProgressView()
                             .controlSize(.small)
-                        Text("Installing update...")
+                        Text("Установка обновления...")
                             .font(.caption.weight(.semibold))
                     }
                     .foregroundStyle(.white)
@@ -393,7 +393,7 @@ struct MenuBarView: View {
                     Button {
                         updateManager.showUpdateAlert()
                     } label: {
-                        Label("Update available", systemImage: "arrow.down.circle.fill")
+                        Label("Доступно обновление", systemImage: "arrow.down.circle.fill")
                     }
                     .buttonStyle(.plain)
                     .foregroundStyle(.white)

@@ -232,7 +232,7 @@ final class UpdateManager: ObservableObject {
             let (data, response) = try await URLSession.shared.data(for: request)
 
             guard let httpResponse = response as? HTTPURLResponse else {
-                if userInitiated { showErrorAlert("Could not reach GitHub.") }
+                if userInitiated { showErrorAlert("Не удалось подключиться к GitHub.") }
                 return
             }
 
@@ -259,7 +259,7 @@ final class UpdateManager: ObservableObject {
             guard let currentVersion = SemanticVersion(currentVersionString) else {
                 updateAvailable = false
                 if userInitiated {
-                    showErrorAlert("The current app version does not use semantic versioning.")
+                    showErrorAlert("Текущая версия приложения не использует семантическое версионирование.")
                 }
                 return
             }
@@ -271,7 +271,7 @@ final class UpdateManager: ObservableObject {
                 latestReleaseVersion = ""
                 latestReleaseDate = ""
                 if userInitiated {
-                    showErrorAlert("No semantic version release was found.")
+                    showErrorAlert("Не найдено релиза с семантической версией.")
                 }
                 return
             }
@@ -325,7 +325,7 @@ final class UpdateManager: ObservableObject {
             }
         } catch {
             if userInitiated {
-                showErrorAlert("Failed to check for updates: \(error.localizedDescription)")
+                showErrorAlert("Не удалось проверить обновления: \(error.localizedDescription)")
             }
         }
     }
@@ -435,15 +435,15 @@ final class UpdateManager: ObservableObject {
         guard let release = latestRelease else { return }
 
         let alert = NSAlert()
-        alert.messageText = "A New Version is Available"
+        alert.messageText = "Доступна новая версия"
         let versionText = latestReleaseVersion.isEmpty ? release.tagName : "v\(latestReleaseVersion)"
-        alert.informativeText = "\(AppName.displayName) \(versionText) was released \(latestReleaseDate).\n\nWould you like to download the update?"
+        alert.informativeText = "\(AppName.displayName) \(versionText) вышла \(latestReleaseDate).\n\nЗагрузить обновление?"
         alert.alertStyle = .informational
         alert.icon = NSApp.applicationIconImage
-        alert.addButton(withTitle: "Download Update")
-        alert.addButton(withTitle: "What's New")
-        alert.addButton(withTitle: "Remind Me Later")
-        alert.addButton(withTitle: "Skip This Version")
+        alert.addButton(withTitle: "Скачать обновление")
+        alert.addButton(withTitle: "Что нового")
+        alert.addButton(withTitle: "Напомнить позже")
+        alert.addButton(withTitle: "Пропустить эту версию")
 
         let response = alert.runModal()
         switch response {
@@ -465,18 +465,18 @@ final class UpdateManager: ObservableObject {
     private func showRecentReleaseAlert(daysSincePublished: Double) {
         guard let release = latestRelease else { return }
 
-        let hoursAgo = Int(daysSincePublished * 24)
-        let ageText = hoursAgo < 1 ? "less than an hour ago" : hoursAgo < 24 ? "\(hoursAgo) hour\(hoursAgo == 1 ? "" : "s") ago" : "\(Int(daysSincePublished)) day\(Int(daysSincePublished) == 1 ? "" : "s") ago"
+let hoursAgo = Int(daysSincePublished * 24)
+        let ageText = hoursAgo < 1 ? "менее часа назад" : hoursAgo < 24 ? "\(hoursAgo) ч. назад" : "\(Int(daysSincePublished)) дн. назад"
 
         let alert = NSAlert()
-        alert.messageText = "New Release Available"
+        alert.messageText = "Доступен новый релиз"
         let versionText = latestReleaseVersion.isEmpty ? release.tagName : "v\(latestReleaseVersion)"
-        alert.informativeText = "\(AppName.displayName) \(versionText) was released \(ageText). It's very recent — you can download it now or wait a few days for stability.\n\nWould you like to download it?"
+        alert.informativeText = "\(AppName.displayName) \(versionText) вышла \(ageText). Это свежий релиз — можно скачать сейчас или подождать несколько дней для стабильности.\n\nЗагрузить обновление?"
         alert.alertStyle = .informational
         alert.icon = NSApp.applicationIconImage
-        alert.addButton(withTitle: "Download Now")
-        alert.addButton(withTitle: "What's New")
-        alert.addButton(withTitle: "Wait")
+        alert.addButton(withTitle: "Скачать сейчас")
+        alert.addButton(withTitle: "Что нового")
+        alert.addButton(withTitle: "Подождать")
 
         let response = alert.runModal()
         switch response {
@@ -493,8 +493,8 @@ final class UpdateManager: ObservableObject {
 
     func showUpToDateAlert() {
         let alert = NSAlert()
-        alert.messageText = "You're Up to Date"
-        alert.informativeText = "You're running the latest version of \(AppName.displayName)."
+        alert.messageText = "У вас последняя версия"
+        alert.informativeText = "У вас установлена последняя версия \(AppName.displayName)."
         alert.alertStyle = .informational
         alert.icon = NSApp.applicationIconImage
         alert.addButton(withTitle: "OK")
@@ -509,15 +509,15 @@ final class UpdateManager: ObservableObject {
     private func showReleaseNotes(for release: GitHubRelease) {
         let alert = NSAlert()
         let versionText = latestReleaseVersion.isEmpty ? release.tagName : "v\(latestReleaseVersion)"
-        alert.messageText = "What's New in \(AppName.displayName) \(versionText)"
-        alert.informativeText = "Release notes from GitHub."
+        alert.messageText = "Что нового в \(AppName.displayName) \(versionText)"
+        alert.informativeText = "Примечания к релизу с GitHub."
         alert.alertStyle = .informational
         alert.icon = NSApp.applicationIconImage
         alert.accessoryView = releaseNotesView(text: releaseNotesText(for: release))
         alert.addButton(withTitle: "OK")
 
         if let releaseURL = URL(string: release.htmlUrl) {
-            alert.addButton(withTitle: "Open on GitHub")
+            alert.addButton(withTitle: "Открыть на GitHub")
             let response = alert.runModal()
             if response == .alertSecondButtonReturn {
                 NSWorkspace.shared.open(releaseURL)
@@ -529,7 +529,7 @@ final class UpdateManager: ObservableObject {
 
     private func releaseNotesText(for release: GitHubRelease) -> String {
         guard let body = releaseNotesBody(from: release.body) else {
-            return "No release notes were published for this version."
+            return "Для этой версии не опубликованы примечания к релизу."
         }
 
         return body
@@ -679,7 +679,7 @@ final class UpdateManager: ObservableObject {
 
     private func showErrorAlert(_ message: String) {
         let alert = NSAlert()
-        alert.messageText = "Update Check Failed"
+        alert.messageText = "Не удалось проверить обновления"
         alert.informativeText = message
         alert.alertStyle = .warning
         alert.icon = NSApp.applicationIconImage
@@ -719,7 +719,7 @@ final class UpdateManager: ObservableObject {
         do {
             try fm.createDirectory(at: tempDir, withIntermediateDirectories: true)
         } catch {
-            updateStatus = .error("Failed to create temp directory: \(error.localizedDescription)")
+            updateStatus = .error("Не удалось создать временную директорию: \(error.localizedDescription)")
             return
         }
 
@@ -791,7 +791,7 @@ final class UpdateManager: ObservableObject {
             try? fm.removeItem(at: tempDir)
             return
         } catch {
-            updateStatus = .error("Download failed: \(error.localizedDescription)")
+            updateStatus = .error("Не удалось загрузить: \(error.localizedDescription)")
             downloadProgress = nil
             try? fm.removeItem(at: tempDir)
             return
@@ -819,7 +819,7 @@ final class UpdateManager: ObservableObject {
             let volumeURL = URL(fileURLWithPath: mountPoint)
             let contents = try fm.contentsOfDirectory(at: volumeURL, includingPropertiesForKeys: nil)
             guard let appBundle = contents.first(where: { $0.pathExtension == "app" }) else {
-                updateStatus = .error("No .app found in DMG.")
+                updateStatus = .error("В приложении DMG не найден .app.")
                 try? fm.removeItem(at: tempDir)
                 return
             }
@@ -838,7 +838,7 @@ final class UpdateManager: ObservableObject {
             replaceAndRelaunch(stagedApp: stagedApp, stagingDir: stagingDir)
 
         } catch {
-            updateStatus = .error("Install failed: \(error.localizedDescription)")
+            updateStatus = .error("Ошибка установки: \(error.localizedDescription)")
             try? fm.removeItem(at: tempDir)
         }
     }
@@ -857,7 +857,7 @@ final class UpdateManager: ObservableObject {
 
         guard process.terminationStatus == 0 else {
             throw NSError(domain: "UpdateManager", code: 1, userInfo: [
-                NSLocalizedDescriptionKey: "hdiutil attach failed with exit code \(process.terminationStatus)"
+                NSLocalizedDescriptionKey: "hdiutil attach завершился с кодом \(process.terminationStatus)"
             ])
         }
 
@@ -867,7 +867,7 @@ final class UpdateManager: ObservableObject {
         guard let plist = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
               let entities = plist["system-entities"] as? [[String: Any]] else {
             throw NSError(domain: "UpdateManager", code: 2, userInfo: [
-                NSLocalizedDescriptionKey: "Could not parse hdiutil output"
+                NSLocalizedDescriptionKey: "Не удалось разобрать вывод hdiutil"
             ])
         }
 
@@ -879,7 +879,7 @@ final class UpdateManager: ObservableObject {
         }
 
         throw NSError(domain: "UpdateManager", code: 3, userInfo: [
-            NSLocalizedDescriptionKey: "No mount point found in hdiutil output"
+            NSLocalizedDescriptionKey: "Точка монтирования не найдена в выводе hdiutil"
         ])
     }
 
